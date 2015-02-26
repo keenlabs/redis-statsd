@@ -9,7 +9,14 @@ At [Keen](http://keen.io) we run some Redis instances in Mesos with dynamically 
 therefore have an on-box StatsD instance to report to. Therefore this little program can be started with a dynamic
 port and report metrics out to DogStatsD!
 
-# Optional DogStatsD Tag Support
+# Notes
+
+## A Word On Counters
+
+Values that are counters in the stats from Redis are converted in to deltas by this program, since that's what StatsD
+expects.
+
+## Optional DogStatsD Tag Support
 
 The `--no-tags` option will disable support for [DogStatsD](http://docs.datadoghq.com/guides/dogstatsd/)-style tags.
 
