@@ -1,11 +1,17 @@
 # redis-statsd
 
-Redis statsd is a small, dependency free Python program for periodically fetching stats via Redis' INFO
+redis-statsd is a small, dependency free Python program for periodically fetching stats via Redis' INFO
 command and emitting them to a local StatsD.
+
+# Motivation
+
+At [Keen](http://keen.io) we run some Redis instances in Mesos with dynamically allocated ports. We use Datadog and
+therefore have an on-box StatsD instance to report to. Therefore this little program can be started with a dynamic
+port and report metrics out to DogStatsD!
 
 # Optional DogStatsD Tag Support
 
-The `--no-tags` option will disable support for [DogStatsD](http://docs.datadoghq.com/guides/dogstatsd/)
+The `--no-tags` option will disable support for [DogStatsD](http://docs.datadoghq.com/guides/dogstatsd/)-style tags.
 
 # Usage
 
