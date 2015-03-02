@@ -8,10 +8,8 @@ import time
 parser = argparse.ArgumentParser(description='Collect metrics from Redis and emit to StatsD')
 parser.add_argument('--period', dest='period', type=int, default=20, help='The period at which to collect and emit metrics')
 parser.add_argument('--prefix', dest='prefix', type=str, default='redis', help='The prefix to use for metric names')
-parser.add_argument('--redis-host', dest='redis_host', type=str, default='localhost', help='The address of the Redis host to connect to')
-parser.add_argument('--redis-port', dest='redis_port', type=int, default=6379, help='The port of the Redis host to connect to')
-parser.add_argument('--statsd-host', dest='statsd_host', type=str, default='localhost', help='The port of the StatsD host to connect to')
-parser.add_argument('--statsd-port', dest='statsd_port', type=int, default=8125, help='The port of the Redis port to connect to')
+parser.add_argument('--redis-host', dest='redis_host', type=str, default='localhost:6379', help='The address and port of the Redis host to connect to')
+parser.add_argument('--statsd-host', dest='statsd_host', type=str, default='localhost:8125', help='The address and port of the StatsD host to connect to')
 parser.add_argument('--no-tags', dest='tags', action='store_false', help='Disable tags for use with DogStatsD')
 
 args = parser.parse_args()
@@ -72,7 +70,8 @@ def send_metric(name, mtype, value, tags=None):
         last_seens[mkey] = value
 
     met = '{}:{}|{}{}'.format(name, finalvalue, mtype, tagstring)
-    out_sock.sendto(met, (args.statsd_host, args.statsd_port))
+    (statsd_host, statsd_port) = args.statsd_host.split(':')
+    out_sock.sendto(met, (statsd_host, int(statsd_port)))
 
 def linesplit(socket):
     buffer = socket.recv(4096)
@@ -94,7 +93,8 @@ def linesplit(socket):
 
 while True:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((args.redis_host, args.redis_port))
+    (redis_host, redis_port) = args.redis_host.split(':')
+    s.connect((redis_host, int(redis_port)))
     s.send("INFO\n")
 
     stats = {}
