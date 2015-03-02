@@ -18,7 +18,12 @@ args = parser.parse_args()
 GAUGES = {
     'blocked_clients': 'blocked_clients',
     'connected_clients': 'connected_clients',
+    'instantaneous_ops_per_sec': 'instantaneous_ops_per_sec',
+    'latest_fork_usec': 'latest_fork_usec',
     'mem_fragmentation_ratio': 'mem_fragmentation_ratio',
+    'migrate_cached_sockets': 'migrate_cached_sockets',
+    'pubsub_channels': 'pubsub_channels',
+    'pubsub_patterns': 'pubsub_patterns',
     'uptime_in_seconds': 'uptime_in_seconds',
     'used_memory': 'used_memory',
     'used_memory_lua': 'used_memory_lua',
@@ -28,13 +33,8 @@ GAUGES = {
 COUNTERS = {
     'evicted_keys': 'evicted_keys',
     'expired_keys': 'expired_keys',
-    'instantaneous_ops_per_sec': 'instantaneous_ops_per_sec',
     'keyspace_hits': 'keyspace_hits',
     'keyspace_misses': 'keyspace_misses',
-    'latest_fork_usec': 'latest_fork_usec',
-    'migrate_cached_sockets': 'migrate_cached_sockets',
-    'pubsub_channels': 'pubsub_channels',
-    'pubsub_patterns': 'pubsub_patterns',
     'rejected_connections': 'rejected_connections',
     'sync_full': 'sync_full',
     'sync_partial_err': 'sync_partial_err',
@@ -43,11 +43,11 @@ COUNTERS = {
     'total_connections_received': 'total_connections_received'
 }
 KEYSPACE_COUNTERS = {
-    'expires': 'expires',
-    'keys': 'keys'
+    'expires': 'expires'
 }
 KEYSPACE_GAUGES = {
-    'avg_ttl': 'avg_ttl'
+    'avg_ttl': 'avg_ttl',
+    'keys': 'keys'
 }
 
 last_seens = {}
