@@ -10,6 +10,7 @@ parser.add_argument('--period', dest='period', type=int, default=20, help='The p
 parser.add_argument('--prefix', dest='prefix', type=str, default='redis', help='The prefix to use for metric names')
 parser.add_argument('--redis-host', dest='redis_host', type=str, default='localhost:6379', help='The address and port of the Redis host to connect to')
 parser.add_argument('--statsd-host', dest='statsd_host', type=str, default='localhost:8125', help='The address and port of the StatsD host to connect to')
+parser.add_argument('--global-tags', dest='global_tags', type=str, help='Global tags to add to all metrics')
 parser.add_argument('--no-tags', dest='tags', action='store_false', help='Disable tags for use with DogStatsD')
 
 args = parser.parse_args()
@@ -54,8 +55,15 @@ last_seens = {}
 def send_metric(name, mtype, value, tags=None):
     tagstring = ''
     finalvalue = value
-    if tags is not None and args.tags:
+    if tags is None:
+        tags = []
+
+    if args.global_tags is not None:
+        tags.extend(args.global_tags.split(','))
+
+    if len(tags) > 0 and args.tags:
         tagstring = '#{}'.format(','.join(tags))
+
     if mtype == 'c':
         # For counters we will calculate our own deltas.
         mkey = '{}:{}'.format(name, tagstring)
