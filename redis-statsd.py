@@ -62,7 +62,7 @@ def send_metric(name, mtype, value, tags=None):
         tags.extend(args.global_tags.split(','))
 
     if len(tags) > 0 and args.tags:
-        tagstring = '#{}'.format(','.join(tags))
+        tagstring = '|#{}'.format(','.join(tags))
 
     if mtype == 'c':
         # For counters we will calculate our own deltas.
