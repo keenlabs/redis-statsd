@@ -1,6 +1,6 @@
 FROM python:2
 
-ADD . /usr/src/app
+COPY . /usr/src/app
 WORKDIR /usr/src/app
 
 ENTRYPOINT [ "./redis-statsd.py" ]
