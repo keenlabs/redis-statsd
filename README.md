@@ -9,6 +9,9 @@ At [Keen](http://keen.io) we run some Redis instances in Mesos with dynamically 
 therefore have an on-box StatsD instance to report to. Therefore this little program can be started with a dynamic
 port and report metrics out to DogStatsD!
 
+# Docker
+A public docker image is available on [docker hub](https://hub.docker.com/r/keen/redis-statsd/).
+
 # Notes
 
 ## A Word On Counters
